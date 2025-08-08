@@ -30,9 +30,11 @@
   const leftGroup = ['obj1', 'obj3'];
   const rightGroup = ['obj2', 'obj4'];
 
-  // 구역에 쌓일 이미지 카운트 (Y 위치 계산용)
-  let leftStackCount = 0;
-  let rightStackCount = 0;
+  // 각 이미지 타입별 스택 카운트 (Y 위치 계산용)
+  let stackCounts = {
+    left: { obj1: 0, obj3: 0 },
+    right: { obj2: 0, obj4: 0 }
+  };
 
   // 각 구역의 쌓인 이미지들을 저장하는 배열
   let leftStackImages = [];
@@ -53,8 +55,10 @@
     score = 0;
     timeLeft = 60;
     gameEnded = false;
-    leftStackCount = 0;
-    rightStackCount = 0;
+    stackCounts = {
+      left: { obj1: 0, obj3: 0 },
+      right: { obj2: 0, obj4: 0 }
+    };
     leftStackImages = [];
     rightStackImages = [];
     
@@ -221,11 +225,27 @@
     let targetX, targetY;
     
     if (direction === 'left') {
-      targetX = 100;
-      targetY = 580 - (leftStackCount * 35); // 더 아래에서 시작하고 간격 증가
+      // obj1은 왼쪽, obj3는 오른쪽에 배치 (각각의 스택 높이 관리)
+      if (key === 'obj1') {
+        targetX = 80;
+        targetY = 580 - (stackCounts.left.obj1 * 35);
+        stackCounts.left.obj1++;
+      } else if (key === 'obj3') {
+        targetX = 120;
+        targetY = 580 - (stackCounts.left.obj3 * 35);
+        stackCounts.left.obj3++;
+      }
     } else {
-      targetX = 700;
-      targetY = 580 - (rightStackCount * 35); // 더 아래에서 시작하고 간격 증가
+      // obj2는 왼쪽, obj4는 오른쪽에 배치 (각각의 스택 높이 관리)
+      if (key === 'obj2') {
+        targetX = 680;
+        targetY = 580 - (stackCounts.right.obj2 * 35);
+        stackCounts.right.obj2++;
+      } else if (key === 'obj4') {
+        targetX = 720;
+        targetY = 580 - (stackCounts.right.obj4 * 35);
+        stackCounts.right.obj4++;
+      }
     }
     
     const animImage = scene.add.image(400, 450, key);
@@ -235,20 +255,18 @@
       targets: animImage,
       x: targetX,
       y: targetY,
-      scaleX: 0.7, // 쌓인 이미지를 더 작게
+      scaleX: 0.7,
       scaleY: 0.7,
       duration: 400,
       ease: 'Power2',
       onComplete: () => {
         const stackedImage = scene.add.image(targetX, targetY, key);
-        stackedImage.setScale(0.7); // 쌓인 이미지를 더 작게
+        stackedImage.setScale(0.7);
         
         if (direction === 'left') {
           leftStackImages.push(stackedImage);
-          leftStackCount++;
         } else {
           rightStackImages.push(stackedImage);
-          rightStackCount++;
         }
         
         animImage.destroy();
