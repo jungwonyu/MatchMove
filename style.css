@@ -1,0 +1,163 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+}
+
+#startScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#gameContainer {
+  display: none;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#gameContainer.active {
+  display: flex;
+}
+
+#endScreen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+#endScreen.active {
+  display: flex;
+}
+
+.gameOverTitle {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.finalScore {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #ffeb3b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.scoreMessage {
+  font-size: 18px;
+  margin-bottom: 40px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.gameButtons {
+  display: flex;
+  gap: 20px;
+}
+
+.restartButton,
+.homeButton {
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.restartButton {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+}
+
+.restartButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(45deg, #45a049, #3d8b40);
+}
+
+.homeButton {
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+}
+
+.homeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(45deg, #1976D2, #1565C0);
+}
+
+.title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 40px;
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.instructions {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.instructions h3 {
+  margin-top: 0;
+  color: #ffeb3b;
+}
+
+.instructions p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.startButton {
+  padding: 15px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.startButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(45deg, #ff5252, #d63031);
+}
+
+.startButton:active {
+  transform: translateY(0);
+}

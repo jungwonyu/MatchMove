@@ -4,96 +4,7 @@
   <meta charset="UTF-8">
   <title>Character Match Move</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
-    canvas {
-      display: block;
-      margin: auto;
-    }
-    
-    #startScreen {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    
-    #gameContainer {
-      display: none;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    
-    #gameContainer.active {
-      display: flex;
-    }
-    
-    .title {
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
-    
-    .subtitle {
-      font-size: 18px;
-      margin-bottom: 40px;
-      text-align: center;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-    
-    .instructions {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      max-width: 500px;
-      text-align: center;
-    }
-    
-    .instructions h3 {
-      margin-top: 0;
-      color: #ffeb3b;
-    }
-    
-    .instructions p {
-      margin: 10px 0;
-      font-size: 14px;
-    }
-    
-    .startButton {
-      padding: 15px 40px;
-      font-size: 24px;
-      font-weight: bold;
-      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    
-    .startButton:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-      background: linear-gradient(45deg, #ff5252, #d63031);
-    }
-    
-    .startButton:active {
-      transform: translateY(0);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -114,15 +25,63 @@
 
 <div id="gameContainer"></div> <!-- 게임 캔버스 -->
 
+<div id="endScreen">
+  <h1 class="gameOverTitle">게임 종료!</h1>
+  <div class="finalScore" id="finalScoreText">최종 점수: 0</div>
+  <p class="scoreMessage" id="scoreMessage">잘 했어요!</p>
+  
+  <div class="gameButtons">
+    <button class="restartButton" onclick="restartGame()">다시 하기</button>
+    <button class="homeButton" onclick="goHome()">처음으로</button>
+  </div>
+</div>
+
 <script src="game.js"></script>
 
 <script>
 function startGame() {
   document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('endScreen').classList.remove('active');
   const gameContainer = document.getElementById('gameContainer');
   gameContainer.style.display = 'flex';
   gameContainer.classList.add('active');
   initializeGame(); // 게임 초기화 및 시작
+}
+
+function showEndScreen(finalScore) {
+  document.getElementById('gameContainer').classList.remove('active');
+  document.getElementById('gameContainer').style.display = 'none';
+  
+  // 점수에 따른 메시지 설정
+  let message = '';
+  if (finalScore >= 50) {
+    message = '🏆 완벽해요! 최고의 실력입니다!';
+  } else if (finalScore >= 30) {
+    message = '🎉 훌륭해요! 정말 잘했습니다!';
+  } else if (finalScore >= 15) {
+    message = '👍 좋아요! 더 연습하면 더 잘할 수 있어요!';
+  } else if (finalScore >= 10) {
+    message = '😊 괜찮아요! 다음엔 더 잘할 수 있을 거예요!';
+  } else {
+    message = '💪 연습이 필요해요! 포기하지 말고 다시 도전해보세요!';
+  }
+  
+  document.getElementById('finalScoreText').textContent = '최종 점수: ' + finalScore;
+  document.getElementById('scoreMessage').textContent = message;
+  document.getElementById('endScreen').classList.add('active');
+}
+
+function restartGame() {
+  document.getElementById('endScreen').classList.remove('active');
+  const gameContainer = document.getElementById('gameContainer');
+  gameContainer.style.display = 'flex';
+  gameContainer.classList.add('active');
+  initializeGame(); // 게임 다시 시작
+}
+
+function goHome() {
+  document.getElementById('endScreen').classList.remove('active');
+  document.getElementById('startScreen').style.display = 'flex';
 }
 </script>
 
