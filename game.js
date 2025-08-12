@@ -4,14 +4,23 @@ const config = {
   height: 600,
   backgroundColor: '#d0e0f0',
   physics: {
-    default: 'arcade',
+    default: 'arcade'
   },
   parent: 'gameContainer',
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 600
+  },
   scene: {
     preload,
     create,
-  },
+  }
 };
+
+let game; // 게임 인스턴스를 저장할 변수
+window.gameScene = null; // 전역에서 씬에 접근할 수 있도록
 
 const colors = {
   red: '#cc0000',
@@ -47,8 +56,6 @@ let stackCounts = {
 // 각 구역의 쌓인 이미지들을 저장하는 배열
 let leftStackImages = [];
 let rightStackImages = [];
-
-let game; // 게임 인스턴스를 저장할 변수
 
 // 게임 초기화 함수
 function initializeGame() {
@@ -104,6 +111,9 @@ function preload() {
 }
 
 function create() {
+  // 씬을 전역에서 접근할 수 있도록 저장
+  window.gameScene = this;
+  
   const background = this.add.image(400, 300, 'background');
   background.setDisplaySize(800, 600); // 화면 크기에 맞게 조정
 

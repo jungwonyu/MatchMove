@@ -1,89 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Character Match Move</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div id="startScreen">
+    <h1 class="title">Character Match Move</h1>
+    <p class="subtitle">빠른 판단력과 반사신경을 테스트하는 게임</p>
 
-<div id="startScreen">
-  <h1 class="title">Character Match Move</h1>
-  <p class="subtitle">빠른 판단력과 반사신경을 테스트하는 게임</p>
-  
-  <div class="instructions">
-    <h3>게임 규칙</h3>
-    <p><strong>← →</strong> 왼쪽/오른쪽 그룹에 속하는 이미지가 나오면 해당 방향키를 누르세요</p>
-    <p><strong>스페이스바</strong> 가시고기가 나오면 스페이스바를 누르세요</p>
-    <p><strong>점수:</strong> 정답 +1점, 오답 -2점</p>
-    <p><strong>시간:</strong> 60초 제한</p>
+    <div class="instructions">
+      <h3>게임 규칙</h3>
+      <p><strong>PC:</strong> ← → 키 (왼쪽/오른쪽), 스페이스바 (가시고기)</p>
+      <p><strong>모바일:</strong> ← → 스와이프 (왼쪽/오른쪽), ↑ 스와이프 (가시고기)</p>
+      <p><strong>점수:</strong> 정답 +1점, 오답 -2점</p>
+      <p><strong>시간:</strong> 60초 제한</p>
+    </div>
+
+    <button class="startButton" onclick="startGame()">게임 시작</button>
   </div>
-  
-  <button class="startButton" onclick="startGame()">게임 시작</button>
-</div>
 
-<div id="gameContainer"></div> <!-- 게임 캔버스 -->
+  <div id="gameContainer"></div> <!-- 게임 캔버스 -->
 
-<div id="endScreen">
-  <h1 class="gameOverTitle">게임 종료!</h1>
-  <div class="finalScore" id="finalScoreText">최종 점수: 0</div>
-  <p class="scoreMessage" id="scoreMessage">잘 했어요!</p>
-  
-  <div class="gameButtons">
-    <button class="restartButton" onclick="restartGame()">다시 하기</button>
-    <button class="homeButton" onclick="goHome()">처음으로</button>
+  <!-- 모바일 스와이프 감지 영역 -->
+  <div id="swipeArea"></div>
+
+  <div id="endScreen">
+    <h1 class="gameOverTitle">게임 종료!</h1>
+    <div class="finalScore" id="finalScoreText">최종 점수: 0</div>
+    <p class="scoreMessage" id="scoreMessage">잘 했어요!</p>
+
+    <div class="gameButtons">
+      <button class="restartButton" onclick="restartGame()">다시 하기</button>
+      <button class="homeButton" onclick="goHome()">처음으로</button>
+    </div>
   </div>
-</div>
 
-<script src="game.js"></script>
-
-<script>
-function startGame() {
-  document.getElementById('startScreen').style.display = 'none';
-  document.getElementById('endScreen').classList.remove('active');
-  const gameContainer = document.getElementById('gameContainer');
-  gameContainer.style.display = 'flex';
-  gameContainer.classList.add('active');
-  initializeGame(); // 게임 초기화 및 시작
-}
-
-function showEndScreen(finalScore) {
-  document.getElementById('gameContainer').classList.remove('active');
-  document.getElementById('gameContainer').style.display = 'none';
-  
-  // 점수에 따른 메시지 설정
-  let message = '';
-  if (finalScore >= 50) {
-    message = '🏆 완벽해요! 최고의 실력입니다!';
-  } else if (finalScore >= 30) {
-    message = '🎉 훌륭해요! 정말 잘했습니다!';
-  } else if (finalScore >= 15) {
-    message = '👍 좋아요! 더 연습하면 더 잘할 수 있어요!';
-  } else if (finalScore >= 10) {
-    message = '😊 괜찮아요! 다음엔 더 잘할 수 있을 거예요!';
-  } else {
-    message = '💪 연습이 필요해요! 포기하지 말고 다시 도전해보세요!';
-  }
-  
-  document.getElementById('finalScoreText').textContent = '최종 점수: ' + finalScore;
-  document.getElementById('scoreMessage').textContent = message;
-  document.getElementById('endScreen').classList.add('active');
-}
-
-function restartGame() {
-  document.getElementById('endScreen').classList.remove('active');
-  const gameContainer = document.getElementById('gameContainer');
-  gameContainer.style.display = 'flex';
-  gameContainer.classList.add('active');
-  initializeGame(); // 게임 다시 시작
-}
-
-function goHome() {
-  document.getElementById('endScreen').classList.remove('active');
-  document.getElementById('startScreen').style.display = 'flex';
-}
-</script>
-
+  <script src="game.js"></script>
+  <script src="ui-controller.js"></script>
+  <script src="swipe-controller.js"></script>
 </body>
+
 </html>
